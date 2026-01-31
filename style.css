@@ -468,6 +468,106 @@ header.scrolled .logo-img {
 }
 
 
+/* Diamond Strip Section (City Locator Style) */
+.diamond-strip-section {
+    padding: 30px 0;
+    background: var(--white);
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.diamond-strip-track {
+    display: flex;
+    gap: 60px; /* Spacing between items */
+    width: max-content;
+    animation: scrollMarquee 40s linear infinite;
+    padding: 10px 0;
+}
+
+.diamond-strip-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.diamond-strip-item:hover {
+    transform: translateY(-5px);
+}
+
+.diam-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.diam-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.diamond-strip-item:hover .diam-icon {
+    border-color: var(--gold);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
+    background: var(--cream);
+}
+
+.diam-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray);
+    transition: color 0.3s ease;
+}
+
+.diamond-strip-item:hover .diam-name {
+    color: var(--gold-dark);
+}
+
+@keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Pause on hover */
+.diamond-strip-track:hover {
+    animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+    .diamond-strip-section {
+        padding: 20px 0;
+    }
+    .diamond-strip-track {
+        gap: 40px;
+    }
+    .diam-icon {
+        width: 50px;
+        height: 50px;
+    }
+    .diam-name {
+        font-size: 0.7rem;
+    }
+}
+
+
+
+
 /* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
@@ -1078,4 +1178,234 @@ footer {
     
     .cta-buttons { flex-direction: column; }
     .cta-buttons .btn { width: 100%; }
+}
+/* Hero Carousel & Search Section */
+.hero-carousel-section {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.carousel-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* overflow: hidden is inherited from section, but good to ensure here too if needed */
+}
+
+/* Slide Track */
+.carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth Slide Effect */
+}
+
+/* Slide Styling */
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    opacity: 1; /* Always visible */
+    z-index: 0;
+}
+
+/* Removed opacity transition/active state styles as we slide now */
+
+
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Navigation Dots */
+.carousel-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active, .dot:hover {
+    background-color: var(--gold);
+    transform: scale(1.2);
+}
+
+.hero-overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+    z-index: 2; /* Gradient above slides */
+    pointer-events: none;
+}
+
+.hero-overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 3; /* Content above gradient */
+    color: var(--white);
+    padding: 0 5%;
+}
+
+.hero-text-content {
+    max-width: 650px;
+    margin-bottom: 50px;
+}
+
+.hero-text-content h2 {
+    font-size: 3.8rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    margin-bottom: 24px;
+    color: #F8F1E7; /* Light cream/gold */
+    line-height: 1.1;
+    text-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.hero-text-content p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Store Search Wrapper */
+.store-search-wrapper {
+    background: var(--white);
+    padding: 10px;
+    border-radius: 50px;
+    max-width: 600px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 6px 10px;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 8px;
+}
+
+.search-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #0F172A; /* Dark blue/primary */
+}
+
+.store-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    color: #1E293B;
+    background: transparent;
+    padding: 10px 0;
+    font-family: var(--font-body);
+}
+
+.store-search-input::placeholder {
+    color: #94A3B8;
+}
+
+.store-search-btn {
+    background: #022E71; /* Dark Blue from user code svg */
+    color: var(--white);
+    border: none;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(2, 46, 113, 0.3);
+}
+
+.store-search-btn:hover {
+    background: #0D3C85;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(2, 46, 113, 0.4);
+}
+
+
+/* Responsive Styles for Hero Carousel */
+@media (max-width: 992px) {
+    .hero-carousel-section {
+        height: 600px;
+    }
+    .hero-text-content h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-carousel-section {
+        height: 550px;
+    }
+    
+    .hero-text-content h2 {
+        font-size: 2.4rem;
+    }
+    
+    .hero-text-content p {
+        font-size: 1.1rem;
+    }
+    
+    .hero-overlay-gradient {
+        background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+    }
+    
+    .hero-overlay-content {
+        top: auto;
+        bottom: 0;
+        transform: translateY(0);
+        padding-bottom: 60px;
+    }
+    
+    .store-search-wrapper {
+        width: 100%;
+        padding: 5px;
+    }
+    
+    .search-input-group {
+        padding: 5px;
+        gap: 10px;
+    }
+    
+    .store-search-btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+    .search-icon svg {
+        width: 20px;
+        height: 20px;
+    }
 }

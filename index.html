@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,311 +14,1157 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: {
+                DEFAULT: "#D4AF37",
+                light: "#F5E6A3",
+                dark: "#B8960C",
+              },
+              cream: "#fef9f3",
+              black: {
+                DEFAULT: "#0a0a0a",
+                light: "#1a1a1a",
+                medium: "#2d2d2d",
+              },
+              gray: {
+                DEFAULT: "#6b7280",
+                light: "#9ca3af",
+              },
+            },
+            fontFamily: {
+              heading: ['"Playfair Display"', "serif"],
+              body: ['"Inter"', "sans-serif"],
+            },
+            backgroundImage: {
+              "gold-gradient":
+                "linear-gradient(135deg, #D4AF37 0%, #F5E6A3 50%, #D4AF37 100%)",
+              "dark-gradient":
+                "linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "scale(1) rotate(0deg)" },
+                "50%": { transform: "scale(1.05) rotate(5deg)" },
+              },
+              diamondFloat: {
+                "0%, 100%": { marginTop: "0" },
+                "50%": { marginTop: "-8px" },
+              },
+              glowPulse: {
+                "0%, 100%": {
+                  transform: "translate(-50%, -50%) scale(1)",
+                  opacity: "0.4",
+                },
+                "50%": {
+                  transform: "translate(-50%, -50%) scale(1.1)",
+                  opacity: "0.6",
+                },
+              },
+              scrollMarquee: {
+                "0%": { transform: "translateX(0)" },
+                "100%": { transform: "translateX(-50%)" },
+              },
+              scrollLine: {
+                "0%": { transform: "scaleY(0)", transformOrigin: "top" },
+                "50%": { transform: "scaleY(1)", transformOrigin: "top" },
+                "50.1%": { transform: "scaleY(1)", transformOrigin: "bottom" },
+                "100%": { transform: "scaleY(0)", transformOrigin: "bottom" },
+              },
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              diamondFloat: "diamondFloat 6s ease-in-out infinite",
+              glowPulse: "glowPulse 2.5s ease-in-out infinite",
+              scrollMarquee: "scrollMarquee 40s linear infinite",
+              scrollLine: "scrollLine 2s ease-in-out infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      html {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .gold-text {
+          @apply bg-gold-gradient bg-clip-text text-transparent;
+        }
+        .btn {
+          @apply inline-flex items-center justify-center px-8 py-3.5 font-body text-sm font-medium rounded-full cursor-pointer transition-all duration-300 border-2 border-transparent;
+        }
+        .btn-gold {
+          @apply bg-gold-gradient text-black border-gold hover:-translate-y-[3px] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)];
+        }
+        .btn-outline-gold {
+          @apply bg-transparent text-gold border-gold hover:bg-gold hover:text-black;
+        }
+        .btn-white {
+          @apply bg-white text-black hover:-translate-y-[3px] hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)];
+        }
+        .btn-outline-white {
+          @apply bg-transparent text-white border-[rgba(255,255,255,0.5)] hover:bg-white hover:text-black;
+        }
+        .btn-sm {
+          @apply px-6 py-2.5 text-[0.85rem];
+        }
+        .nav-link {
+          @apply text-[0.9rem] font-medium text-black-light lg:text-white lg:[.scrolled_&]:text-black-light relative transition-colors duration-300 hover:text-gold-dark;
+        }
+        .nav-link::after {
+          content: "";
+          @apply absolute bottom-[-5px] left-0 w-0 h-[2px] bg-gold transition-[width] duration-300;
+        }
+        .nav-link:hover::after {
+          @apply w-full;
+        }
+      }
+    </style>
+    <!-- Keep style.css linked but it should be redundant after conversion. Commenting out to ensure we are using Tailwind. -->
+    <!-- <link rel="stylesheet" href="style.css" /> -->
   </head>
-  <body>
+  <body class="bg-cream text-black font-body leading-relaxed overflow-x-hidden">
     <!-- Header -->
-    <header>
-      <nav class="container">
+    <!-- Header -->
+    <header
+      class="navbar fixed top-0 left-0 w-full z-[1000] py-4 transition-all duration-300 bg-transparent [&.scrolled]:py-2.5"
+    >
+      <nav
+        class="container mx-auto px-6 max-w-[1200px] flex justify-between items-center"
+      >
         <div class="logo">
           <img
             src="assets/images/tattsvi-logo.png"
             alt="Tattsvi Logo"
-            class="logo-img"
+            class="logo-img h-[70px] w-auto transition-all duration-300 [.scrolled_&]:h-[55px]"
           />
         </div>
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="https://tattsvi.in/lander" target="_blank">Shop</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+
+        <!-- Nav Links (Single Instance for JS) -->
+        <!-- Desktop: Flex row, transparent, right aligned (via justify-between on container) -->
+        <!-- Mobile: Fixed slide-out from right, white bg, vertical column -->
+        <ul
+          class="nav-links fixed top-0 right-[-100%] w-full h-screen bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center gap-[40px] shadow-none transition-[right] duration-500 z-[2000] list-none p-0 lg:static lg:w-auto lg:h-auto lg:max-w-none lg:bg-transparent lg:backdrop-blur-none lg:flex-row lg:gap-10 lg:shadow-none lg:p-0 lg:transition-none [&.active]:right-0"
+        >
+          <!-- Mobile Close Button -->
+          <button
+            class="close-menu-btn absolute top-6 right-6 text-white text-4xl leading-none font-thin hover:text-gold transition-colors duration-300 lg:hidden"
+            aria-label="Close Menu"
+          >
+            &times;
+          </button>
+
+          <li>
+            <a
+              href="#home"
+              class="nav-link text-[2rem] font-heading font-light !text-white lg:!text-white lg:text-[0.9rem] lg:font-medium lg:[.scrolled_&]:!text-black-light"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://tattsvi.in/lander"
+              target="_blank"
+              class="nav-link text-[2rem] font-heading font-light !text-white lg:!text-white lg:text-[0.9rem] lg:font-medium lg:[.scrolled_&]:!text-black-light"
+              >Shop</a
+            >
+          </li>
+          <li>
+            <a
+              href="#products"
+              class="nav-link text-[2rem] font-heading font-light !text-white lg:!text-white lg:text-[0.9rem] lg:font-medium lg:[.scrolled_&]:!text-black-light"
+              >Products</a
+            >
+          </li>
+          <li>
+            <a
+              href="#about"
+              class="nav-link text-[2rem] font-heading font-light !text-white lg:!text-white lg:text-[0.9rem] lg:font-medium lg:[.scrolled_&]:!text-black-light"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="nav-link text-[2rem] font-heading font-light !text-white lg:!text-white lg:text-[0.9rem] lg:font-medium lg:[.scrolled_&]:!text-black-light"
+              >Contact</a
+            >
+          </li>
         </ul>
-        <a
+
+        <!-- Login Button: Always visible on header, doesn't move into menu (based on original design not hiding it) -->
+        <!-- Just in case it was hidden on mobile in original, I'll keep it visible as it's a good practice, but check collision -->
+        <!-- <a
           href="https://tattsvi.socioledger.com/login"
           target="_blank"
-          class="btn btn-gold btn-sm"
+          class="btn btn-gold btn-sm hidden sm:inline-flex"
           >Login</a
-        >
-        <button class="mobile-menu-btn" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        > -->
+        <!-- Hidden on very small screens if needed, but 'sm:inline-flex' hides it on <640px? No, 'hidden sm:inline' means hidden on <sm. -->
+        <!-- Original CSS didn't hide it. I'll make it always visible if space permits, or follow typical pattern. Let's make it always visible for now but check layout. -->
+        <!-- Actually original didn't have classes to hide it. I'll leave it visible. -->
+        <!-- But strictly, I should restore it to simply: -->
+        <!-- <a ... class="btn btn-gold btn-sm">Login</a> -->
+        <!-- And let container flex handle it. -->
+        <!-- The container is justify-between. Logo - Nav - Login - Hamburger? No, Nav is in middle? -->
+        <!-- Original CSS: nav { justify-content: space-between; } -->
+        <!-- Structure: Logo, Nav, Loign, Hamburger. -->
+        <!-- If Nav is hidden (fixed right), then Logo .... Login Hamburger. -->
+        <!-- I'll use order if needed, but DOM order is fine. -->
+        <!-- Wait, I need to wrap Login in a div? No. -->
+
+        <div class="flex items-center gap-4">
+          <a
+            href="https://tattsvi.socioledger.com/login"
+            target="_blank"
+            class="btn btn-gold btn-sm hidden md:inline-flex"
+            >Login</a
+          >
+
+          <button
+            class="mobile-menu-btn lg:hidden flex flex-col gap-[5px] bg-none border-none cursor-pointer p-[5px] hamburger"
+            aria-label="Menu"
+          >
+            <span
+              class="block w-[25px] h-[2px] bg-white transition-all duration-300 [.scrolled_&]:bg-black"
+            ></span>
+            <span
+              class="block w-[25px] h-[2px] bg-white transition-all duration-300 [.scrolled_&]:bg-black"
+            ></span>
+            <span
+              class="block w-[25px] h-[2px] bg-white transition-all duration-300 [.scrolled_&]:bg-black"
+            ></span>
+          </button>
+        </div>
       </nav>
     </header>
 
+    <!-- NEW Hero Carousel & Search Section -->
+    <section
+      class="hero-carousel-section relative w-full h-[850px] lg:h-[958px] overflow-hidden mt-0"
+    >
+      <!-- Video Banner -->
+      <div class="relative w-full h-full mx-auto overflow-hidden">
+        <video
+          src="assets/vedio/02_ROY_26-12-2025_3A.mp4"
+          autoplay
+          loop
+          muted
+          playsinline
+          class="w-full h-full object-cover block"
+        ></video>
+
+        <div
+          class="hero-overlay-gradient absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[rgba(0,0,0,0.65)] via-[rgba(0,0,0,0.3)] to-transparent z-[15] pointer-events-none md:bg-gradient-to-b md:from-[rgba(0,0,0,0.4)] md:to-[rgba(0,0,0,0.7)]"
+        ></div>
+      </div>
+    </section>
+
     <main>
       <!-- Hero Section -->
-      <section id="home" class="hero-section">
-        <div class="hero-bg-pattern"></div>
-        <div class="container hero-content">
-          <div class="hero-text">
-            <span class="hero-tagline">Where Luxury Meets Legacy</span>
-            <h1>
+      <section
+        id="home"
+        class="hero-section min-h-screen flex items-center relative pt-[30px] overflow-hidden"
+      >
+        <div
+          class="hero-bg-pattern absolute top-0 right-0 w-[60%] h-full bg-gradient-to-br from-transparent via-[rgba(212,175,55,0.05)] to-[rgba(212,175,55,0.05)] [clip-path:polygon(30%_0,100%_0,100%_100%,0%_100%)]"
+        ></div>
+        <div
+          class="container mx-auto px-6 max-w-[1200px] hero-content grid grid-cols-1 lg:grid-cols-2 gap-[60px] items-center relative z-[2] pt-[40px] lg:pt-[100px] text-center lg:text-left"
+        >
+          <div class="hero-text order-1 lg:order-none mx-auto lg:mx-0">
+            <span
+              class="hero-tagline inline-block text-[0.8rem] md:text-[0.85rem] font-medium tracking-[3px] uppercase text-gold mb-5 relative pl-[50px] before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-[40px] before:h-[2px] before:bg-gold"
+              >Where Luxury Meets Legacy</span
+            >
+            <h1
+              class="text-[2.25rem] md:text-[3rem] lg:text-[clamp(2.5rem,5vw,4rem)] font-heading font-semibold leading-[1.2] mb-6 text-black"
+            >
               Exquisite <span class="gold-text">Jewelry</span><br />Wholesale
               Excellence
             </h1>
-            <p>
+            <p
+              class="text-[1.1rem] text-gray mb-10 max-w-[500px] mx-auto lg:mx-0"
+            >
               Discover the art of timeless elegance. Premium craftsmanship,
               certified quality, and unparalleled beauty in every piece we
               create.
             </p>
-            <div class="cta-group">
+            <div
+              class="cta-group flex gap-4 flex-wrap justify-center lg:justify-start"
+            >
               <a href="#products" class="btn btn-gold">Explore Collection</a>
               <a href="#about" class="btn btn-outline-gold">Our Legacy</a>
             </div>
           </div>
-          <div class="hero-visual">
-            <div class="diamonds-showcase">
-              <div class="diamond-item" data-shape="Heart">
-                <div class="diamond-container">
+          <div
+            class="hero-visual order-2 lg:order-none h-auto lg:h-[500px] flex items-center justify-center relative"
+          >
+            <div
+              class="diamonds-showcase relative w-full max-w-[clamp(280px,85vw,550px)] aspect-square mx-auto my-[60px] lg:mb-[80px] flex justify-center items-center z-[5]"
+            >
+              <!-- Heart -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[16%] left-[18%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Heart"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_heart.png"
                     alt="Heart"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Heart</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Heart</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Oval">
-                <div class="diamond-container">
+
+              <!-- Oval -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[3%] left-[52%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Oval"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_oval.png"
                     alt="Oval"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Oval</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Oval</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Princess">
-                <div class="diamond-container">
+
+              <!-- Princess -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[16%] left-[86%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Princess"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_princess.png"
                     alt="Princess"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Princess</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Princess</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Emerald">
-                <div class="diamond-container">
+
+              <!-- Emerald -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[50%] left-[8%] md:left-[3%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Emerald"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_emerald.png"
                     alt="Emerald"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Emerald</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Emerald</span
+                >
               </div>
 
-              <div class="diamond-item" data-shape="Round">
-                <div class="diamond-glow"></div>
-                <div class="diamond-container">
+              <!-- Round (Center) -->
+              <div
+                class="diamond-item group absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[49%] left-[53%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Round"
+              >
+                <div
+                  class="diamond-glow absolute w-[130%] h-[130%] bg-[radial-gradient(circle,rgba(212,175,55,0.15)_0%,transparent_70%)] rounded-full z-[-1] opacity-0 transition-opacity duration-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 group-hover:animate-glowPulse"
+                ></div>
+                <!-- Custom sizing for center piece -->
+                <div
+                  class="diamond-container w-[clamp(75px,14vw,105px)] h-[clamp(75px,14vw,105px)] bg-[radial-gradient(circle_at_center,#fff_0%,#fafafa_100%)] border border-[rgba(212,175,55,0.4)] z-15 rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_round.png"
                     alt="Round"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Round</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Round</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Cushion">
-                <div class="diamond-container">
+
+              <!-- Cushion -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[50%] left-[92%] md:left-[95%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Cushion"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_cushion.png"
                     alt="Cushion"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Cushion</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Cushion</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Pear">
-                <div class="diamond-container">
+
+              <!-- Pear -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[80%] left-[14%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Pear"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_pear.png"
                     alt="Pear"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Pear</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Pear</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Marquise">
-                <div class="diamond-container">
+
+              <!-- Marquise -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[95%] left-[52.50%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Marquise"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_marquise.png"
                     alt="Marquise"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Marquise</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Marquise</span
+                >
               </div>
-              <div class="diamond-item" data-shape="Asscher">
-                <div class="diamond-container">
+
+              <!-- Asscher -->
+              <div
+                class="diamond-item absolute flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] z-10 hover:z-20 animate-diamondFloat top-[80%] left-[88%] -translate-x-1/2 -translate-y-1/2"
+                data-shape="Asscher"
+              >
+                <div
+                  class="diamond-container w-[clamp(50px,9vw,80px)] h-[clamp(50px,9vw,80px)] bg-white rounded-full flex items-center justify-center shadow-[0_8px_25px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(212,175,55,0.1)] p-[clamp(6px,1.2vw,12px)] transition-all duration-400 relative hover:scale-108 hover:shadow-[0_15px_35px_rgba(212,175,55,0.15),inset_0_0_0_1px_#D4AF37]"
+                >
                   <img
                     src="assets/images/diamonds/diamond_asscher.png"
                     alt="Asscher"
-                    class="diamond-img"
+                    class="diamond-img max-w-full max-h-full object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.06)] z-[2]"
                   />
                 </div>
-                <span class="shape-name">Asscher</span>
+                <span
+                  class="shape-name absolute top-[105%] left-1/2 -translate-x-1/2 text-[clamp(0.55rem,0.9vw,0.7rem)] font-bold tracking-[1.2px] uppercase text-[#4b5563] whitespace-nowrap mt-[5px] group-hover:text-gold group-hover:tracking-[2px]"
+                  >Asscher</span
+                >
               </div>
             </div>
           </div>
         </div>
-        <div class="scroll-indicator">
-          <span>Scroll to explore</span>
-          <div class="scroll-line"></div>
+        <div
+          class="scroll-indicator absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[10px] hidden md:flex"
+        >
+          <span class="text-[0.75rem] tracking-[2px] uppercase text-gray"
+            >Scroll to explore</span
+          >
+          <div
+            class="scroll-line w-[1px] h-[40px] bg-gradient-to-b from-gold to-transparent animate-scrollLine"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Diamond Strip Section (City Locator Style) -->
+      <section
+        class="diamond-strip-section py-[20px] md:py-[30px] bg-white overflow-hidden relative border-y border-[rgba(0,0,0,0.05)]"
+      >
+        <div
+          class="diamond-strip-track flex gap-[40px] md:gap-[60px] w-max animate-scrollMarquee py-[10px] hover:[animation-play-state:paused]"
+        >
+          <!-- Set 1 -->
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_round.png"
+                alt="Round"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Round</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_princess.png"
+                alt="Princess"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Princess</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_cushion.png"
+                alt="Cushion"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Cushion</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_oval.png"
+                alt="Oval"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Oval</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_emerald.png"
+                alt="Emerald"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Emerald</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_pear.png"
+                alt="Pear"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Pear</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_marquise.png"
+                alt="Marquise"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Marquise</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_asscher.png"
+                alt="Asscher"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Asscher</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_heart.png"
+                alt="Heart"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Heart</span
+            >
+          </div>
+
+          <!-- Set 2 (Duplicate) -->
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_round.png"
+                alt="Round"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Round</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_princess.png"
+                alt="Princess"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Princess</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_cushion.png"
+                alt="Cushion"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Cushion</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_oval.png"
+                alt="Oval"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Oval</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_emerald.png"
+                alt="Emerald"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Emerald</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_pear.png"
+                alt="Pear"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Pear</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_marquise.png"
+                alt="Marquise"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Marquise</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_asscher.png"
+                alt="Asscher"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Asscher</span
+            >
+          </div>
+          <div
+            class="diamond-strip-item group flex flex-col items-center gap-[12px] cursor-pointer transition-transform duration-300 shrink-0 hover:-translate-y-1"
+          >
+            <div
+              class="diam-icon w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-[rgba(212,175,55,0.2)] flex items-center justify-center p-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] transition-all duration-300 group-hover:border-gold group-hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group-hover:bg-cream"
+            >
+              <img
+                src="assets/images/diamonds/diamond_heart.png"
+                alt="Heart"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <span
+              class="diam-name text-[0.7rem] md:text-[0.8rem] font-semibold uppercase tracking-[1px] text-gray transition-colors duration-300 group-hover:text-gold-dark"
+              >Heart</span
+            >
+          </div>
         </div>
       </section>
 
       <!-- Stats Section -->
-      <section class="stats-section">
-        <div class="container">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-number" data-target="25">0</div>
-              <span class="stat-plus">+</span>
-              <p class="stat-label">Years of Excellence</p>
+      <section class="stats-section py-[80px] bg-white">
+        <div class="container mx-auto px-6 max-w-[1200px]">
+          <div
+            class="stats-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px] lg:gap-[40px]"
+          >
+            <div
+              class="stat-card text-center p-[30px] relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[60%] after:bg-gradient-to-b after:from-transparent after:via-gold after:to-transparent last:after:hidden md:after:hidden lg:after:block"
+            >
+              <div
+                class="stat-number font-heading text-[2.5rem] md:text-[3rem] font-bold bg-gold-gradient bg-clip-text text-transparent inline"
+                data-target="5"
+              >
+                0
+              </div>
+              <span
+                class="stat-plus font-heading text-[2rem] bg-gold-gradient bg-clip-text text-transparent"
+                >+</span
+              >
+              <p class="stat-label text-[0.9rem] text-gray mt-2">
+                Years of Excellence
+              </p>
             </div>
-            <div class="stat-card">
-              <div class="stat-number" data-target="5000">0</div>
-              <span class="stat-plus">+</span>
-              <p class="stat-label">Happy Clients</p>
+            <div
+              class="stat-card text-center p-[30px] relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[60%] after:bg-gradient-to-b after:from-transparent after:via-gold after:to-transparent last:after:hidden md:after:hidden lg:after:block"
+            >
+              <div
+                class="stat-number font-heading text-[2.5rem] md:text-[3rem] font-bold bg-gold-gradient bg-clip-text text-transparent inline"
+                data-target="15"
+              >
+                0
+              </div>
+              <span
+                class="stat-plus font-heading text-[2rem] bg-gold-gradient bg-clip-text text-transparent"
+                >+</span
+              >
+              <p class="stat-label text-[0.9rem] text-gray mt-2">
+                Happy Clients
+              </p>
             </div>
-            <div class="stat-card">
-              <div class="stat-number" data-target="100">0</div>
-              <span class="stat-plus">K+</span>
-              <p class="stat-label">Premium Products</p>
+            <div
+              class="stat-card text-center p-[30px] relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[60%] after:bg-gradient-to-b after:from-transparent after:via-gold after:to-transparent last:after:hidden md:after:hidden lg:after:block"
+            >
+              <div
+                class="stat-number font-heading text-[2.5rem] md:text-[3rem] font-bold bg-gold-gradient bg-clip-text text-transparent inline"
+                data-target="100"
+              >
+                0
+              </div>
+              <span
+                class="stat-plus font-heading text-[2rem] bg-gold-gradient bg-clip-text text-transparent"
+                >K+</span
+              >
+              <p class="stat-label text-[0.9rem] text-gray mt-2">
+                Premium Products
+              </p>
             </div>
-            <div class="stat-card">
-              <div class="stat-number" data-target="50">0</div>
-              <span class="stat-plus">+</span>
-              <p class="stat-label">Countries</p>
+            <div
+              class="stat-card text-center p-[30px] relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[60%] after:bg-gradient-to-b after:from-transparent after:via-gold after:to-transparent last:after:hidden md:after:hidden lg:after:block"
+            >
+              <div
+                class="stat-number font-heading text-[2.5rem] md:text-[3rem] font-bold bg-gold-gradient bg-clip-text text-transparent inline"
+                data-target="3"
+              >
+                0
+              </div>
+              <span
+                class="stat-plus font-heading text-[2rem] bg-gold-gradient bg-clip-text text-transparent"
+                >+</span
+              >
+              <p class="stat-label text-[0.9rem] text-gray mt-2">Countries</p>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Product Categories -->
-      <section id="products" class="products-section">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Our Collections</span>
-            <h2>Discover <span class="gold-text">Luxury</span></h2>
-            <p>Curated collections crafted with passion and precision</p>
+      <section id="products" class="products-section py-[100px] bg-cream">
+        <div class="container mx-auto px-6 max-w-[1200px]">
+          <div class="section-header text-center mb-[60px]">
+            <span
+              class="section-tag inline-block text-[0.8rem] font-semibold tracking-[3px] uppercase text-gold mb-4"
+              >Our Collections</span
+            >
+            <h2
+              class="text-[2rem] md:text-[3rem] lg:text-[clamp(2rem,4vw,3rem)] mb-4 font-heading font-semibold leading-[1.2]"
+            >
+              Discover <span class="gold-text">Luxury</span>
+            </h2>
+            <p class="text-[1.1rem] text-gray">
+              Curated collections crafted with passion and precision
+            </p>
           </div>
-          <div class="products-grid">
-            <!-- Gold Jewelry -> Necklaces Image -->
-            <div class="product-card">
-              <div class="product-image">
+          <div
+            class="products-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]"
+          >
+            <!-- Gold Jewelry -->
+            <div
+              class="product-card group bg-white rounded-[20px] overflow-hidden transition-all duration-400 border border-[rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="product-image h-[250px] md:h-[300px] overflow-hidden relative border-b-[3px] border-gold"
+              >
                 <img
                   src="https://tirthgold.com/images/augc/tg/nacklaces.jpg"
                   alt="Gold Jewelry"
+                  class="w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
                 />
               </div>
-              <div class="product-content">
-                <span class="product-tag">Premium Collection</span>
-                <h3>Gold Jewelry</h3>
-                <p>
+              <div class="product-content p-[30px]">
+                <span
+                  class="product-tag inline-block text-[0.7rem] font-semibold tracking-[2px] uppercase text-gold mb-3"
+                  >Premium Collection</span
+                >
+                <h3
+                  class="text-[1.4rem] mb-3 text-black font-heading font-semibold"
+                >
+                  Gold Jewelry
+                </h3>
+                <p class="text-[0.9rem] text-gray mb-5 leading-relaxed">
                   Exquisite 18K, 22K & 24K gold pieces. Rings, necklaces,
                   bracelets crafted with perfection.
                 </p>
-                <a href="#" class="product-link"
-                  >View Collection <span>→</span></a
+                <a
+                  href="https://tattsvi.in/lander"
+                  target="_blank"
+                  class="product-link inline-flex items-center gap-2 text-[0.9rem] font-medium text-black hover:text-gold transition-colors duration-300 group/link"
+                  >View Collection
+                  <span
+                    class="transition-transform duration-300 group-hover/link:translate-x-[5px]"
+                    >→</span
+                  ></a
                 >
               </div>
             </div>
 
-            <!-- Diamond Jewelry -> Rings Image -->
-            <div class="product-card">
-              <div class="product-image">
+            <!-- Diamond Jewelry -->
+            <div
+              class="product-card group bg-white rounded-[20px] overflow-hidden transition-all duration-400 border border-[rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="product-image h-[250px] md:h-[300px] overflow-hidden relative border-b-[3px] border-gold"
+              >
                 <img
                   src="https://tirthgold.com/images/augc/tg/rings.jpg"
                   alt="Diamond Jewelry"
+                  class="w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
                 />
               </div>
-              <div class="product-content">
-                <span class="product-tag">Certified</span>
-                <h3>Diamond Jewelry</h3>
-                <p>GIA certified diamonds in stunning settings.</p>
-                <a href="#" class="product-link"
-                  >View Collection <span>→</span></a
+              <div class="product-content p-[30px]">
+                <span
+                  class="product-tag inline-block text-[0.7rem] font-semibold tracking-[2px] uppercase text-gold mb-3"
+                  >Certified</span
+                >
+                <h3
+                  class="text-[1.4rem] mb-3 text-black font-heading font-semibold"
+                >
+                  Diamond Jewelry
+                </h3>
+                <p class="text-[0.9rem] text-gray mb-5 leading-relaxed">
+                  GIA certified diamonds in stunning settings.
+                </p>
+                <a
+                  href="https://tattsvi.in/lander"
+                  target="_blank"
+                  class="product-link inline-flex items-center gap-2 text-[0.9rem] font-medium text-black hover:text-gold transition-colors duration-300 group/link"
+                  >View Collection
+                  <span
+                    class="transition-transform duration-300 group-hover/link:translate-x-[5px]"
+                    >→</span
+                  ></a
                 >
               </div>
             </div>
 
-            <!-- Silver -> Chains Image -->
-            <div class="product-card">
-              <div class="product-image">
+            <!-- Silver Jewelry -->
+            <div
+              class="product-card group bg-white rounded-[20px] overflow-hidden transition-all duration-400 border border-[rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="product-image h-[250px] md:h-[300px] overflow-hidden relative border-b-[3px] border-gold"
+              >
                 <img
                   src="https://tirthgold.com/images/augc/tg/chain.jpg"
                   alt="Silver Chains"
+                  class="w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
                 />
               </div>
-              <div class="product-content">
-                <span class="product-tag">Elegant</span>
-                <h3>Silver Jewelry</h3>
-                <p>Sterling silver chains with timeless elegance.</p>
-                <a href="#" class="product-link"
-                  >View Collection <span>→</span></a
+              <div class="product-content p-[30px]">
+                <span
+                  class="product-tag inline-block text-[0.7rem] font-semibold tracking-[2px] uppercase text-gold mb-3"
+                  >Elegant</span
+                >
+                <h3
+                  class="text-[1.4rem] mb-3 text-black font-heading font-semibold"
+                >
+                  Silver Jewelry
+                </h3>
+                <p class="text-[0.9rem] text-gray mb-5 leading-relaxed">
+                  Sterling silver chains with timeless elegance.
+                </p>
+                <a
+                  href="https://tattsvi.in/lander"
+                  target="_blank"
+                  class="product-link inline-flex items-center gap-2 text-[0.9rem] font-medium text-black hover:text-gold transition-colors duration-300 group/link"
+                  >View Collection
+                  <span
+                    class="transition-transform duration-300 group-hover/link:translate-x-[5px]"
+                    >→</span
+                  ></a
                 >
               </div>
             </div>
 
-            <!-- Precious Stones -> Pendant Sets Image -->
-            <div class="product-card">
-              <div class="product-image">
-                <img src="assets/images/2.png" alt="Pendant Sets" />
+            <!-- Precious Stones -->
+            <div
+              class="product-card group bg-white rounded-[20px] overflow-hidden transition-all duration-400 border border-[rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="product-image h-[250px] md:h-[300px] overflow-hidden relative border-b-[3px] border-gold"
+              >
+                <img
+                  src="assets/images/2.png"
+                  alt="Pendant Sets"
+                  class="w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
+                />
               </div>
-              <div class="product-content">
-                <span class="product-tag">Natural</span>
-                <h3>Precious Stones</h3>
-                <p>Emeralds, rubies, and pendant sets from the finest mines.</p>
-                <a href="#" class="product-link"
-                  >View Collection <span>→</span></a
+              <div class="product-content p-[30px]">
+                <span
+                  class="product-tag inline-block text-[0.7rem] font-semibold tracking-[2px] uppercase text-gold mb-3"
+                  >Natural</span
+                >
+                <h3
+                  class="text-[1.4rem] mb-3 text-black font-heading font-semibold"
+                >
+                  Precious Stones
+                </h3>
+                <p class="text-[0.9rem] text-gray mb-5 leading-relaxed">
+                  Emeralds, rubies, and pendant sets from the finest mines.
+                </p>
+                <a
+                  href="https://tattsvi.in/lander"
+                  target="_blank"
+                  class="product-link inline-flex items-center gap-2 text-[0.9rem] font-medium text-black hover:text-gold transition-colors duration-300 group/link"
+                  >View Collection
+                  <span
+                    class="transition-transform duration-300 group-hover/link:translate-x-[5px]"
+                    >→</span
+                  ></a
                 >
               </div>
             </div>
 
-            <!-- New Product 5: Bangles -->
-            <div class="product-card">
-              <div class="product-image">
+            <!-- Bangles -->
+            <div
+              class="product-card group bg-white rounded-[20px] overflow-hidden transition-all duration-400 border border-[rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="product-image h-[250px] md:h-[300px] overflow-hidden relative border-b-[3px] border-gold"
+              >
                 <img
                   src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80"
                   alt="Bangles"
+                  class="w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
                 />
               </div>
-              <div class="product-content">
-                <span class="product-tag">Traditional</span>
-                <h3>Bangles</h3>
-                <p>Handcrafted gold and diamond bangles for every occasion.</p>
-                <a href="#" class="product-link"
-                  >View Collection <span>→</span></a
+              <div class="product-content p-[30px]">
+                <span
+                  class="product-tag inline-block text-[0.7rem] font-semibold tracking-[2px] uppercase text-gold mb-3"
+                  >Traditional</span
+                >
+                <h3
+                  class="text-[1.4rem] mb-3 text-black font-heading font-semibold"
+                >
+                  Bangles
+                </h3>
+                <p class="text-[0.9rem] text-gray mb-5 leading-relaxed">
+                  Handcrafted gold and diamond bangles for every occasion.
+                </p>
+                <a
+                  href="https://tattsvi.in/lander"
+                  target="_blank"
+                  class="product-link inline-flex items-center gap-2 text-[0.9rem] font-medium text-black hover:text-gold transition-colors duration-300 group/link"
+                  >View Collection
+                  <span
+                    class="transition-transform duration-300 group-hover/link:translate-x-[5px]"
+                    >→</span
+                  ></a
                 >
               </div>
             </div>
 
-            <!-- New Product 6: Mangalsutra -->
-            <div class="product-card">
-              <div class="product-image">
+            <!-- Mangalsutra -->
+            <div
+              class="product-card group bg-white rounded-[20px] overflow-hidden transition-all duration-400 border border-[rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+            >
+              <div
+                class="product-image h-[250px] md:h-[300px] overflow-hidden relative border-b-[3px] border-gold"
+              >
                 <video
                   src="assets/images/JS00887-YGS300_16_video.mp4"
                   autoplay
                   loop
                   muted
                   playsinline
-                  class="product-video"
+                  class="product-video w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
                 ></video>
               </div>
-              <div class="product-content">
-                <span class="product-tag">Sacred</span>
-                <h3>Mangalsutra</h3>
-                <p>
+              <div class="product-content p-[30px]">
+                <span
+                  class="product-tag inline-block text-[0.7rem] font-semibold tracking-[2px] uppercase text-gold mb-3"
+                  >Sacred</span
+                >
+                <h3
+                  class="text-[1.4rem] mb-3 text-black font-heading font-semibold"
+                >
+                  Mangalsutra
+                </h3>
+                <p class="text-[0.9rem] text-gray mb-5 leading-relaxed">
                   Symbol of love and commitment, designed with modern elegance.
                 </p>
-                <a href="#" class="product-link"
-                  >View Collection <span>→</span></a
+                <a
+                  href="https://tattsvi.in/lander"
+                  target="_blank"
+                  class="product-link inline-flex items-center gap-2 text-[0.9rem] font-medium text-black hover:text-gold transition-colors duration-300 group/link"
+                  >View Collection
+                  <span
+                    class="transition-transform duration-300 group-hover/link:translate-x-[5px]"
+                    >→</span
+                  ></a
                 >
               </div>
             </div>
@@ -327,59 +1173,120 @@
       </section>
 
       <!-- Why Choose Us -->
-      <section id="about" class="about-section">
-        <div class="container">
-          <div class="about-grid">
+      <section id="about" class="about-section py-[100px] bg-white">
+        <div class="container mx-auto px-6 max-w-[1200px]">
+          <div
+            class="about-grid grid grid-cols-1 lg:grid-cols-2 gap-[60px] lg:gap-[80px] items-center text-center lg:text-left"
+          >
             <div class="about-content">
-              <span class="section-tag">Why Tattsvi</span>
-              <h2>
+              <span
+                class="section-tag inline-block text-[0.8rem] font-semibold tracking-[3px] uppercase text-gold mb-4 text-left"
+                >Why Tattsvi</span
+              >
+              <h2
+                class="text-[2rem] md:text-[3rem] lg:text-[2.8rem] mb-6 lg:mb-6 font-heading font-semibold leading-[1.2]"
+              >
                 Crafting Dreams Into <span class="gold-text">Reality</span>
               </h2>
-              <p class="about-description">
+              <p
+                class="about-description text-[1.1rem] text-gray mb-10 leading-[1.8]"
+              >
                 For over two decades, Tattsvi has been the trusted name in
                 premium jewelry wholesale. Our commitment to excellence, ethical
                 sourcing, and unparalleled craftsmanship sets us apart.
               </p>
-              <div class="features-list">
-                <div class="feature-item">
-                  <div class="feature-icon">🏆</div>
+              <div
+                class="features-list flex flex-col gap-[24px] max-w-[500px] mx-auto lg:mx-0"
+              >
+                <div class="feature-item flex gap-[20px] items-start text-left">
+                  <div
+                    class="feature-icon w-[50px] h-[50px] bg-gradient-to-br from-[rgba(212,175,55,0.1)] to-[rgba(212,175,55,0.2)] rounded-[12px] flex items-center justify-center text-[1.3rem] shrink-0"
+                  >
+                    🏆
+                  </div>
                   <div class="feature-text">
-                    <h4>Certified Excellence</h4>
-                    <p>
+                    <h4
+                      class="font-body text-[1rem] font-semibold mb-[6px] text-black"
+                    >
+                      Certified Excellence
+                    </h4>
+                    <p class="text-[0.9rem] text-gray">
                       Every piece comes with authentication and quality
                       guarantees
                     </p>
                   </div>
                 </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🌍</div>
+                <div class="feature-item flex gap-[20px] items-start text-left">
+                  <div
+                    class="feature-icon w-[50px] h-[50px] bg-gradient-to-br from-[rgba(212,175,55,0.1)] to-[rgba(212,175,55,0.2)] rounded-[12px] flex items-center justify-center text-[1.3rem] shrink-0"
+                  >
+                    🌍
+                  </div>
                   <div class="feature-text">
-                    <h4>Global Delivery</h4>
-                    <p>Secure worldwide shipping with real-time tracking</p>
+                    <h4
+                      class="font-body text-[1rem] font-semibold mb-[6px] text-black"
+                    >
+                      Global Delivery
+                    </h4>
+                    <p class="text-[0.9rem] text-gray">
+                      Secure worldwide shipping with real-time tracking
+                    </p>
                   </div>
                 </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🔒</div>
+                <div class="feature-item flex gap-[20px] items-start text-left">
+                  <div
+                    class="feature-icon w-[50px] h-[50px] bg-gradient-to-br from-[rgba(212,175,55,0.1)] to-[rgba(212,175,55,0.2)] rounded-[12px] flex items-center justify-center text-[1.3rem] shrink-0"
+                  >
+                    🔒
+                  </div>
                   <div class="feature-text">
-                    <h4>Secure Transactions</h4>
-                    <p>Bank-grade security for all your purchases</p>
+                    <h4
+                      class="font-body text-[1rem] font-semibold mb-[6px] text-black"
+                    >
+                      Secure Transactions
+                    </h4>
+                    <p class="text-[0.9rem] text-gray">
+                      Bank-grade security for all your purchases
+                    </p>
                   </div>
                 </div>
-                <div class="feature-item">
-                  <div class="feature-icon">💬</div>
+                <div class="feature-item flex gap-[20px] items-start text-left">
+                  <div
+                    class="feature-icon w-[50px] h-[50px] bg-gradient-to-br from-[rgba(212,175,55,0.1)] to-[rgba(212,175,55,0.2)] rounded-[12px] flex items-center justify-center text-[1.3rem] shrink-0"
+                  >
+                    💬
+                  </div>
                   <div class="feature-text">
-                    <h4>Dedicated Support</h4>
-                    <p>Personal account managers for your business</p>
+                    <h4
+                      class="font-body text-[1rem] font-semibold mb-[6px] text-black"
+                    >
+                      Dedicated Support
+                    </h4>
+                    <p class="text-[0.9rem] text-gray">
+                      Personal account managers for your business
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="about-visual">
-              <div class="visual-card">
-                <div class="visual-pattern"></div>
-                <div class="visual-content">
-                  <span class="visual-number">5+</span>
-                  <span class="visual-text">Years of<br />Legacy</span>
+            <div
+              class="about-visual flex justify-center items-center h-[400px] lg:h-auto order-first lg:order-last"
+            >
+              <div
+                class="visual-card w-[320px] md:w-[350px] h-[400px] bg-dark-gradient rounded-[30px] relative flex items-center justify-center overflow-hidden"
+              >
+                <div
+                  class="visual-pattern absolute top-0 left-0 w-full h-full [background-image:radial-gradient(circle_at_20%_80%,rgba(212,175,55,0.1)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.1)_0%,transparent_50%)]"
+                ></div>
+                <div class="visual-content text-center relative z-[2]">
+                  <span
+                    class="visual-number block font-heading text-[5rem] font-bold bg-gold-gradient bg-clip-text text-transparent leading-none"
+                    >5+</span
+                  >
+                  <span
+                    class="visual-text block text-[1.2rem] text-white/80 mt-[10px] leading-[1.4]"
+                    >Years of<br />Legacy</span
+                  >
                 </div>
               </div>
             </div>
@@ -388,21 +1295,38 @@
       </section>
 
       <!-- CTA Section -->
-      <section class="cta-section">
-        <div class="cta-bg-pattern"></div>
-        <div class="container cta-content">
-          <span class="section-tag light">Start Your Journey</span>
-          <h2>Ready to Elevate Your Business?</h2>
-          <p>
+      <section
+        class="cta-section py-[100px] bg-dark-gradient relative overflow-hidden"
+      >
+        <div
+          class="cta-bg-pattern absolute top-0 left-0 w-full h-full [background-image:radial-gradient(circle_at_10%_90%,rgba(212,175,55,0.1)_0%,transparent_40%),radial-gradient(circle_at_90%_10%,rgba(212,175,55,0.1)_0%,transparent_40%)]"
+        ></div>
+        <div
+          class="container mx-auto px-6 max-w-[1200px] cta-content text-center relative z-[2]"
+        >
+          <span
+            class="section-tag light inline-block text-[0.8rem] font-semibold tracking-[3px] uppercase text-gold-light mb-4"
+            >Start Your Journey</span
+          >
+          <h2
+            class="text-[2rem] md:text-[3rem] lg:text-[2.8rem] text-white mb-4 font-heading font-semibold"
+          >
+            Ready to Elevate Your Business?
+          </h2>
+          <p class="text-[1.1rem] text-white/70 mb-10 max-w-[500px] mx-auto">
             Join our exclusive network of retailers and experience the Tattsvi
             difference
           </p>
-          <div class="cta-buttons">
-            <a href="#contact" class="btn btn-white">Get Started</a>
+          <div
+            class="cta-buttons flex gap-4 justify-center flex-wrap flex-col sm:flex-row"
+          >
+            <a href="#contact" class="btn btn-white w-full sm:w-auto"
+              >Get Started</a
+            >
             <a
               href="https://tattsvi.socioledger.com/login"
               target="_blank"
-              class="btn btn-outline-white"
+              class="btn btn-outline-white w-full sm:w-auto"
               >Partner Login</a
             >
           </div>
@@ -411,21 +1335,32 @@
     </main>
 
     <!-- Footer -->
-    <footer id="contact">
-      <div class="footer-top">
-        <div class="container footer-grid">
-          <div class="footer-brand">
+    <footer id="contact" class="bg-black text-white">
+      <div class="footer-top py-[80px] pb-[60px]">
+        <div
+          class="container mx-auto px-6 max-w-[1200px] footer-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-[40px] lg:gap-[60px] text-center md:text-left"
+        >
+          <div class="footer-brand flex flex-col items-center md:items-start">
             <img
               src="assets/images/tattsvi-logo.png"
               alt="Tattsvi Logo"
-              class="footer-logo"
+              class="footer-logo h-[120px] w-auto mb-5"
             />
-            <p>
+            <p
+              class="text-[0.95rem] text-white/70 mb-6 max-w-[280px] leading-relaxed"
+            >
               Where Luxury Meets Legacy. Your trusted partner for premium
               jewelry wholesale.
             </p>
-            <div class="social-links">
-              <a href="#" aria-label="Facebook">
+            <div
+              class="social-links flex gap-3 justify-center md:justify-start"
+            >
+              <a
+                href="https://www.facebook.com/tattsvi2112"
+                target="_blank"
+                aria-label="Facebook"
+                class="w-[40px] h-[40px] bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-gold hover:text-black hover:-translate-y-[3px]"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -437,7 +1372,12 @@
                   />
                 </svg>
               </a>
-              <a href="#" aria-label="Instagram">
+              <a
+                href="https://www.instagram.com/tattsvi_/"
+                target="_blank"
+                aria-label="Instagram"
+                class="w-[40px] h-[40px] bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-gold hover:text-black hover:-translate-y-[3px]"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -449,7 +1389,12 @@
                   />
                 </svg>
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a
+                href="https://pin.it/2aeDIriPn"
+                target="_blank"
+                aria-label="Pinterest"
+                class="w-[40px] h-[40px] bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-gold hover:text-black hover:-translate-y-[3px]"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -457,47 +1402,113 @@
                   fill="currentColor"
                 >
                   <path
-                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                    d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.399.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.173 0 7.41 2.967 7.41 6.923 0 4.133-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.62 0 12.017 0z"
                   />
                 </svg>
               </a>
             </div>
           </div>
           <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#products">Products</a></li>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#contact">Contact</a></li>
+            <h4 class="font-heading text-[1rem] font-semibold text-gold mb-6">
+              Quick Links
+            </h4>
+            <ul class="list-none p-0">
+              <li class="mb-[14px]">
+                <a
+                  href="#home"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Home</a
+                >
+              </li>
+              <li class="mb-[14px]">
+                <a
+                  href="#products"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Products</a
+                >
+              </li>
+              <li class="mb-[14px]">
+                <a
+                  href="#about"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >About Us</a
+                >
+              </li>
+              <li class="mb-[14px]">
+                <a
+                  href="#contact"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Contact</a
+                >
+              </li>
             </ul>
           </div>
           <div class="footer-links">
-            <h4>Collections</h4>
-            <ul>
-              <li><a href="#products">Gold Jewelry</a></li>
-              <li><a href="#products">Diamond Jewelry</a></li>
-              <li><a href="#products">Silver Jewelry</a></li>
-              <li><a href="#products">Precious Stones</a></li>
+            <h4 class="font-heading text-[1rem] font-semibold text-gold mb-6">
+              Collections
+            </h4>
+            <ul class="list-none p-0">
+              <li class="mb-[14px]">
+                <a
+                  href="#products"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Gold Jewelry</a
+                >
+              </li>
+              <li class="mb-[14px]">
+                <a
+                  href="#products"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Diamond Jewelry</a
+                >
+              </li>
+              <li class="mb-[14px]">
+                <a
+                  href="#products"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Silver Jewelry</a
+                >
+              </li>
+              <li class="mb-[14px]">
+                <a
+                  href="#products"
+                  class="text-[0.9rem] text-white/70 transition-all duration-300 hover:text-gold hover:pl-[5px]"
+                  >Precious Stones</a
+                >
+              </li>
             </ul>
           </div>
           <div class="footer-contact">
-            <h4>Get In Touch</h4>
-            <ul>
-              <li>
-                <span class="contact-icon">📍</span>
+            <h4 class="font-heading text-[1rem] font-semibold text-gold mb-6">
+              Get In Touch
+            </h4>
+            <ul class="list-none p-0">
+              <li
+                class="flex gap-3 mb-4 text-[0.9rem] text-white/70 leading-relaxed justify-center md:justify-start"
+              >
+                <span class="contact-icon shrink-0">📍</span>
                 <span
                   >1019 Surat Digital Valley, VIP Circle, Surat, Gujarat, India,
                   394101</span
                 >
               </li>
-              <li>
-                <span class="contact-icon">📞</span>
-                <a href="tel:+919099775598">+91 9099775598</a>
+              <li
+                class="flex gap-3 mb-4 text-[0.9rem] text-white/70 leading-relaxed justify-center md:justify-start"
+              >
+                <span class="contact-icon shrink-0">📞</span>
+                <a
+                  href="tel:+919099775598"
+                  class="text-white/70 transition-colors duration-300 hover:text-gold"
+                  >+91 9099775598</a
+                >
               </li>
-              <li>
-                <span class="contact-icon">✉️</span>
-                <a href="mailto:tattsvi.2112@gmail.com"
+              <li
+                class="flex gap-3 mb-4 text-[0.9rem] text-white/70 leading-relaxed justify-center md:justify-start"
+              >
+                <span class="contact-icon shrink-0">✉️</span>
+                <a
+                  href="mailto:tattsvi.2112@gmail.com"
+                  class="text-white/70 transition-colors duration-300 hover:text-gold"
                   >tattsvi.2112@gmail.com</a
                 >
               </li>
@@ -505,13 +1516,21 @@
           </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <div class="container">
-          <p>© 2026 Tattsvi. All rights reserved. | Crafted with ❤️ in India</p>
+      <div class="footer-bottom py-6 border-t border-white/10">
+        <div class="container mx-auto px-6 max-w-[1200px]">
+          <p class="text-center text-[0.85rem] text-white/50">
+            © 2026 Tattsvi. All rights reserved. | Crafted with ❤️ in India
+          </p>
         </div>
       </div>
     </footer>
 
     <script src="script.js"></script>
+    <!-- Update Mobile Menu JS to work with new structure if needed, or rely on existing classes -->
+    <script>
+      // Additional quick fix for mobile menu toggle if the existing script expects exact structure
+      // The existing script toggles .active on .nav-links and .hamburger
+      // I kept those classes so it should work.
+    </script>
   </body>
 </html>
